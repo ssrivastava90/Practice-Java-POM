@@ -1,5 +1,8 @@
 package com.main.upbup.pages;
 
+import com.main.upbup.actions.BrowserActions;
+import com.main.upbup.actions.WebDriverActions;
+import org.apache.log4j.Logger;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -10,18 +13,24 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
+import com.main.upbup.locators.LoginPageLocators;
+import sun.rmi.runtime.Log;
+
 public class LoginPage {
     HomePage homePage;
     WebDriver driver;
+    BrowserActions browserActions;
+    WebDriverActions webDriverActions;
+    Logger logger;
 
-    @FindBy(id = "username")
-    WebElement username;
-
-    @FindBy(id = "password")
-    WebElement password;
-
-    @FindBy(xpath = "//div/button[@class = 'btn btn-lg btn-primary btn-block']")
-    WebElement loginButton;
+//    @FindBy(id = "username")
+//    WebElement username;
+//
+//    @FindBy(id = "password")
+//    WebElement password;
+//
+//    @FindBy(xpath = "//div/button[@class = 'btn btn-lg btn-primary btn-block']")
+//    WebElement loginButton;
 
 
 
@@ -29,6 +38,9 @@ public class LoginPage {
         this.driver = driver;
         PageFactory.initElements(driver,this);
         waitForPageLoaded();
+        browserActions = new BrowserActions(driver);
+        webDriverActions = new WebDriverActions(driver);
+        logger = Logger.getLogger(Log.class.getName());
     }
 
 
@@ -50,24 +62,29 @@ public class LoginPage {
 
 
     public void enterUserName(String user){
-        username.sendKeys(user);
+        webDriverActions.typeTo(LoginPageLocators.USERNAMEF,user);
+        logger.info("Entered Username " + user);
     }
 
-    public void enterPassword(String passwrd){
-        password.sendKeys(passwrd);
+    public void enterPassword(String passwrd)
+    {
+        webDriverActions.typeTo(LoginPageLocators.PASSWORDF,passwrd);
+        logger.info("Entered Password " + passwrd);
     }
 
 
     public void pressLogin(){
-        loginButton.click();
+
+        webDriverActions.clickOn(LoginPageLocators.SUBMITB);
     }
 
     public HomePage loginToUpBup(String user,String passwrd){
-        username.sendKeys(user);
-        password.sendKeys(passwrd);
+        enterUserName(user);
+        enterPassword(passwrd);
         System.out.println("USERNAME: " + user);
         System.out.println("PASSWORD: " + passwrd);
-        loginButton.click();
+
+        webDriverActions.clickOn(LoginPageLocators.SUBMITB);
         homePage = new HomePage(driver);
         return homePage;
     }
