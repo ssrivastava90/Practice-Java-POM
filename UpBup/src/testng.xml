@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="example suite 1" verbose="1" >
+    <test name="Regression suite 1" >
+        <parameter name="username" value="shubhs"/>
+        <parameter name="password" value="Test@1234"/>
+        <classes>
+            <!--<class name="com.main.upbup.tests.HomePageTest"/>-->
+            <!--<class name="com.main.upbup.tests.LoginPageTest"/>-->
+            <class name="com.main.upbup.tests.CareGiverTest"/>
+        </classes>
+    </test>
+</suite>

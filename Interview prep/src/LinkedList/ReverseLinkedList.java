@@ -7,7 +7,7 @@ public class ReverseLinkedList {
 		Node root = new Node(1);
 		root.next = new Node(2);
 		root.next.next = new Node(3);
-		root.next.next = new Node(4);
+		root.next.next.next = new Node(4);
 		
 		ReverseLinkedList obj = new ReverseLinkedList();
 		obj.reverseLinkedList(root);
@@ -19,18 +19,18 @@ public class ReverseLinkedList {
 		Node next = null;
 		Node current = root;
 		
-		while(root.next!=null) {
+		while(current.next!=null) {
 			next = current.next;
 			current.next = prev;
 			prev = current;
 			current = next;			
 		}
 		
-		root = prev;
+		current.next = prev;
 		
-		while(root.next!=null){
-			System.out.println(root.data);
-			root = root.next;
+		while(current!=null){
+			System.out.println(current.data);
+			current = current.next;
 		}
 	}
 	
